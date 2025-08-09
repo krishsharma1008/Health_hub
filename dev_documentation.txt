@@ -1,0 +1,124 @@
+2025-08-09 00:00 - Add AI backend and integrate frontend to use OpenAI via server
+2025-08-09 00:05 - Add Nutrition page with AI-generated meal plans
+2025-08-09 00:12 - Voice assistant & UI enhancements
+2025-08-09 00:24 - Voice MP3 flow, transcription endpoint, and analytics visuals
+2025-08-09 02:30 - MAJOR UPGRADE: Enterprise-grade health copilot with advanced AI features
+
+Changes:
+- Backend: `/api/ai/transcribe` accepts `audio` form-data (webm/mp3), transcribes via `gpt-4o-transcribe` with fallback to `whisper-1`.
+- Frontend: `VoiceAssistant` now records via MediaRecorder (no external encoder), uploads to server, then asks AI.
+- Removed `mic-recorder-to-mp3` dependency to avoid Lame global error.
+- Dashboard: added radar and scatter charts for health scoring and sleep-stress visualization.
+
+Run:
+- Restart both servers if needed: `npm run server` and `npm run dev`.
+
+
+Changes:
+- Backend: added `general_assistant` task in `server/index.js` for open-ended queries.
+- Frontend:
+  - New floating `VoiceAssistant` component (STT via Web Speech API, TTS via SpeechSynthesis) mounted in `App.tsx`.
+  - New `Topbar` in `src/components/ui/topbar.tsx` and included in layout.
+- No changes to build scripts; hot reload picks up updates.
+
+Usage:
+- Open app, bottom-right widget: tap “Speak”, ask a question, then “Ask” to get AI response with optional TTS playback.
+
+Security:
+- Voice data is transcribed locally in-browser. Only the transcribed text is sent to the backend AI endpoint.
+
+
+Changes:
+- New `src/components/Nutrition.tsx` with inputs for preferences, profile, and goals, and a Generate button that calls AI.
+- Sidebar: added `Nutrition` route with icon; App routes updated for `/nutrition`.
+- Backend: extended prompt builder with new `nutrition_plan` task.
+- API: extended `AiTask` type to include `nutrition_plan`.
+
+How to test:
+- Run backend and frontend (see earlier instructions), open `/nutrition` and click “Generate Nutrition Plan”.
+
+
+Changes:
+- Added Express server at `server/index.js` with `/api/ai/generate` endpoint using OpenAI Chat Completions (model `gpt-4o-mini`).
+- Configured Vite proxy in `vite.config.ts` for `/api` to `http://localhost:3001`.
+- Updated `package.json` to add scripts: `server`, `dev:all` and dependencies: `express`, `cors`, `dotenv`, `openai`, and `concurrently`.
+- Created `src/lib/api.ts` to centralize AI calls from the frontend.
+- Integrated AI calls in UI:
+  - `Dashboard.tsx`: loads an AI summary on mount (`dashboard_summary`).
+  - `SymptomIntake.tsx`: sends user symptom context to AI (`symptom_analysis`).
+  - `LabTracker.tsx`: interprets mock lab results via AI (`lab_interpretation`).
+  - `ProviderSearch.tsx`: generates visit prep summary (`visit_prep_summary`).
+
+Environment:
+- Add `OPENAI_API_KEY` to a `.env` file at the project root. Do not commit.
+
+Security & notes:
+- API key stays on server. Frontend calls only `/api` endpoints.
+- Responses are rendered as plain text with whitespace preserved.
+
+How to run:
+1) `npm i`
+2) Create `.env` with `OPENAI_API_KEY=...`
+3) In one terminal: `npm run server`
+4) In another: `npm run dev` (or `npm run dev:all` to run both)
+
+🚀 MAJOR ENTERPRISE UPGRADE - January 9, 2025 02:30 AM
+
+COMPREHENSIVE ADVANCED FEATURES IMPLEMENTED:
+
+1. VECTOR SEARCH WITH CITATIONS
+   - Document chunking and embedding with OpenAI text-embedding-3-small
+   - sqlite-vss for fast vector similarity search
+   - Automatic citation generation with relevance scores
+   - Knowledge base for medical documents, labs, prescriptions
+   - Context retrieval with token management
+
+2. STRUCTURED JSON RESPONSES & TOOL CALLING
+   - Zod schemas for type-safe AI responses
+   - Tool functions: log_symptom, create_goal, schedule_followup, summarize_document
+   - Structured outputs for symptom analysis, lab interpretation, nutrition plans
+   - GPT-4o with function calling and JSON mode
+
+3. REAL-TIME VOICE WITH WEBRTC
+   - WebSocket streaming for low-latency voice communication
+   - Real-time audio transcription with Whisper
+   - Text-to-speech with natural voice responses
+   - Wake word detection ("Hey Health Assistant")
+   - Audio visualization and session management
+
+4. WEARABLES INTEGRATION HUB
+   - Multi-device support: Apple Watch, Oura Ring, Fitbit
+   - Real-time data streams: heart rate, steps, sleep, HRV
+   - Predictive analytics with TensorFlow.js
+   - Anomaly detection and health alerts
+   - Advanced visualizations: radar charts, trend analysis
+
+5. SECURITY & PRIVACY LAYER
+   - PHI redaction with pattern matching
+   - AES encryption for data at rest
+   - Comprehensive audit trails
+   - Role-based access control (user/admin)
+   - Rate limiting and security headers
+   - HIPAA compliance measures
+
+6. MODERN UI/UX REVAMP
+   - Johnny Ive-inspired clean design
+   - Real-time streaming interfaces
+   - Citation displays with confidence scores
+   - Tool action feedback
+   - Advanced data visualizations
+   - Responsive mobile-first design
+
+NEW COMPONENTS:
+- EnhancedChat: Advanced AI chat with citations and tool calling
+- WearablesDashboard: Real-time health monitoring and analytics
+- RealtimeVoice: WebRTC voice interface with live streaming
+- VectorStore: Document embedding and similarity search
+- SecurityManager: PHI protection and audit logging
+- WearablesIntegration: Multi-device health data streaming
+
+The application now features enterprise-grade capabilities including vector search,
+structured AI responses, real-time voice, wearables integration, and comprehensive
+security measures. See ADVANCED_FEATURES.md for complete documentation.
+
+
