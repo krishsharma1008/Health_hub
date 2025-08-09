@@ -18,6 +18,8 @@ import { ChatHistorySidebar } from './components/ChatHistorySidebar'
 import { BottomNavigation } from './components/ui/bottom-navigation'
 import { OnboardingWizard } from './components/OnboardingWizard'
 import { ThemeProvider } from './contexts/ThemeContext'
+import { AuthProvider } from './contexts/AuthContext'
+import AuthPage from './components/Auth'
 
 function App() {
   const [sidebarOpen, setSidebarOpen] = useState(false)
@@ -43,19 +45,22 @@ function App() {
           <div className="flex-1 flex flex-col overflow-hidden pb-16 md:pb-0">
             <Topbar />
             <main className="flex-1 overflow-x-hidden overflow-y-auto">
-              <Routes>
-                <Route path="/" element={<EnhancedChat />} />
-                <Route path="/chat" element={<Chat />} />
-                <Route path="/dashboard" element={<Dashboard />} />
-                <Route path="/symptoms" element={<SymptomIntake />} />
-                <Route path="/labs" element={<LabTracker />} />
-                <Route path="/programs" element={<HealthPrograms />} />
-                <Route path="/preventive" element={<PreventiveCare />} />
-                <Route path="/providers" element={<ProviderSearch />} />
-                <Route path="/nutrition" element={<Nutrition />} />
-                <Route path="/wearables" element={<WearablesDashboard />} />
-                <Route path="/voice" element={<RealtimeVoice />} />
-              </Routes>
+              <AuthProvider>
+                <Routes>
+                  <Route path="/" element={<EnhancedChat />} />
+                  <Route path="/auth" element={<AuthPage />} />
+                  <Route path="/chat" element={<Chat />} />
+                  <Route path="/dashboard" element={<Dashboard />} />
+                  <Route path="/symptoms" element={<SymptomIntake />} />
+                  <Route path="/labs" element={<LabTracker />} />
+                  <Route path="/programs" element={<HealthPrograms />} />
+                  <Route path="/preventive" element={<PreventiveCare />} />
+                  <Route path="/providers" element={<ProviderSearch />} />
+                  <Route path="/nutrition" element={<Nutrition />} />
+                  <Route path="/wearables" element={<WearablesDashboard />} />
+                  <Route path="/voice" element={<RealtimeVoice />} />
+                </Routes>
+              </AuthProvider>
             </main>
             <VoiceAssistant />
           </div>
