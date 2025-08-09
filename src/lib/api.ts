@@ -12,8 +12,16 @@ interface GenerateParams<T = any> {
   chatId?: string
 }
 
+const API_BASE = (import.meta as any).env?.VITE_API_BASE_URL || ''
+
+function apiUrl(path: string) {
+  // If API_BASE provided, prefix; else rely on Vite proxy in dev
+  if (API_BASE) return `${API_BASE}${path}`
+  return path
+}
+
 export async function generateFromAi<TIn, TOut = { result: string }>(params: GenerateParams<TIn>): Promise<TOut & { ok: boolean; task: AiTask }> {
-  const response = await fetch('/api/ai/generate', {
+  const response = await fetch(apiUrl('/api/ai/generate'), {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(params),

@@ -107,7 +107,7 @@ const EnhancedChat: React.FC = () => {
     setInput('')
 
     try {
-      const response = await fetch('/api/ai/generate', {
+      const response = await fetch((import.meta as any).env?.VITE_API_BASE_URL ? `${(import.meta as any).env.VITE_API_BASE_URL}/api/ai/generate` : '/api/ai/generate', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -317,7 +317,7 @@ const EnhancedChat: React.FC = () => {
       const formData = new FormData()
       formData.append('audio', audioBlob, 'recording.webm')
       
-      const response = await fetch('/api/ai/voice-chat', {
+      const response = await fetch((import.meta as any).env?.VITE_API_BASE_URL ? `${(import.meta as any).env.VITE_API_BASE_URL}/api/ai/voice-chat` : '/api/ai/voice-chat', {
         method: 'POST',
         body: formData
       })
@@ -348,7 +348,7 @@ const EnhancedChat: React.FC = () => {
     formData.append('type', 'medical_document')
 
     try {
-      const response = await fetch('/api/kb/upload', {
+      const response = await fetch((import.meta as any).env?.VITE_API_BASE_URL ? `${(import.meta as any).env.VITE_API_BASE_URL}/api/kb/upload` : '/api/kb/upload', {
         method: 'POST',
         body: formData
       })
@@ -422,7 +422,7 @@ const EnhancedChat: React.FC = () => {
       formData.append('type', 'medical_image')
 
       try {
-        const response = await fetch('/api/kb/upload', {
+        const response = await fetch((import.meta as any).env?.VITE_API_BASE_URL ? `${(import.meta as any).env.VITE_API_BASE_URL}/api/kb/upload` : '/api/kb/upload', {
           method: 'POST',
           body: formData
         })
@@ -678,6 +678,8 @@ const EnhancedChat: React.FC = () => {
               value={input}
               onChange={(e) => setInput(e.target.value)}
               placeholder="Ask about symptoms, lab results, nutrition, or general health questions..."
+              id="chat-input"
+              name="message"
               onKeyPress={(e) => e.key === 'Enter' && sendMessage()}
               className="flex-1"
             />

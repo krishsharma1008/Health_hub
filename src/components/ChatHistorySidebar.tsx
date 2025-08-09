@@ -10,14 +10,16 @@ export function ChatHistorySidebar() {
   const location = useLocation()
   useEffect(() => {
     const load = async () => {
-      const r = await fetch('/api/chats')
+    const base = (import.meta as any).env?.VITE_API_BASE_URL
+    const r = await fetch(base ? `${base}/api/chats` : '/api/chats')
       const j = await r.json()
       setChats(j?.chats || [])
     }
     load()
   }, [location.pathname])
   const clearAll = async () => {
-    await fetch('/api/chats/clear', { method: 'POST' })
+    const base = (import.meta as any).env?.VITE_API_BASE_URL
+    await fetch(base ? `${base}/api/chats/clear` : '/api/chats/clear', { method: 'POST' })
     setChats([])
   }
   return (

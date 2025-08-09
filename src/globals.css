@@ -1,6 +1,88 @@
 @import "tailwindcss";
 @config "../tailwind.config.js";
 
+/* Accessibility Styles */
+.accessibility-high-contrast {
+  --background: 0 0% 100%;
+  --foreground: 0 0% 0%;
+  --card: 0 0% 100%;
+  --card-foreground: 0 0% 0%;
+  --popover: 0 0% 100%;
+  --popover-foreground: 0 0% 0%;
+  --primary: 0 0% 0%;
+  --primary-foreground: 0 0% 100%;
+  --secondary: 0 0% 90%;
+  --secondary-foreground: 0 0% 10%;
+  --muted: 0 0% 90%;
+  --muted-foreground: 0 0% 20%;
+  --accent: 0 0% 90%;
+  --accent-foreground: 0 0% 10%;
+  --destructive: 0 84% 60%;
+  --destructive-foreground: 0 0% 98%;
+  --border: 0 0% 60%;
+  --input: 0 0% 90%;
+  --ring: 0 0% 0%;
+  --radius: 0.5rem;
+}
+
+.dark.accessibility-high-contrast {
+  --background: 0 0% 0%;
+  --foreground: 0 0% 100%;
+  --card: 0 0% 0%;
+  --card-foreground: 0 0% 100%;
+  --popover: 0 0% 0%;
+  --popover-foreground: 0 0% 100%;
+  --primary: 0 0% 100%;
+  --primary-foreground: 0 0% 0%;
+  --secondary: 0 0% 10%;
+  --secondary-foreground: 0 0% 90%;
+  --muted: 0 0% 10%;
+  --muted-foreground: 0 0% 80%;
+  --accent: 0 0% 10%;
+  --accent-foreground: 0 0% 90%;
+  --destructive: 0 84% 60%;
+  --destructive-foreground: 0 0% 98%;
+  --border: 0 0% 40%;
+  --input: 0 0% 10%;
+  --ring: 0 0% 100%;
+}
+
+.accessibility-large-text {
+  font-size: 120% !important;
+}
+
+.accessibility-large-text h1 {
+  font-size: 3rem !important;
+}
+
+.accessibility-large-text h2 {
+  font-size: 2.25rem !important;
+}
+
+.accessibility-large-text h3 {
+  font-size: 1.875rem !important;
+}
+
+.accessibility-reduced-motion * {
+  animation-duration: 0.01ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.01ms !important;
+  scroll-behavior: auto !important;
+}
+
+.accessibility-keyboard-nav *:focus {
+  outline: 3px solid hsl(var(--primary)) !important;
+  outline-offset: 2px !important;
+}
+
+.accessibility-keyboard-nav button:focus,
+.accessibility-keyboard-nav a:focus,
+.accessibility-keyboard-nav input:focus,
+.accessibility-keyboard-nav select:focus,
+.accessibility-keyboard-nav textarea:focus {
+  box-shadow: 0 0 0 3px hsl(var(--primary)) !important;
+}
+
 @layer base {
   :root {
     --background: 0 0% 100%;

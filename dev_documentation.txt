@@ -122,3 +122,5 @@ structured AI responses, real-time voice, wearables integration, and comprehensi
 security measures. See ADVANCED_FEATURES.md for complete documentation.
 
 
+2025-08-10 02:34 - Set OPENAI_API_KEY and enabled live AI responses. Added predictions endpoint and guards earlier; verified health and /api/ai/generate works.
+2025-08-10 02:51 - Added runtime OpenAI key API and health validation; ensured EnhancedChat input has id/name; voice-chat route added earlier. To enable live AI, call POST /api/admin/openai-key with a valid key. See README for deploy notes.

@@ -6,7 +6,7 @@ import fs from 'fs'
 export class RealtimeVoiceService extends EventEmitter {
   constructor() {
     super()
-    this.openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY })
+    this.openai = new OpenAI({ apiKey: (process.env.OPENAI_API_KEY || '').trim() })
     this.sessions = new Map()
     this.wss = null
   }

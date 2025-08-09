@@ -1,0 +1,29 @@
+# Node
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Build outputs
+dist/
+.vite/
+
+# Env & secrets
+.env
+.env.*
+
+# Databases & uploads
+*.db
+uploads/
+vector.db
+health_copilot.db
+chat.db
+
+# Logs
+logs/
+
+# OS
+.DS_Store
+
+

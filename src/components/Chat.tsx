@@ -26,7 +26,8 @@ export function Chat() {
 
   useEffect(() => {
     const create = async () => {
-      const r = await fetch('/api/chat', { method: 'POST' })
+      const base = (import.meta as any).env?.VITE_API_BASE_URL
+      const r = await fetch(base ? `${base}/api/chat` : '/api/chat', { method: 'POST' })
       const j = await r.json()
       setChatId(j.chatId)
     }
@@ -70,7 +71,8 @@ export function Chat() {
     const form = new FormData()
     form.append('audio', new File([audioBlob], 'voice.webm', { type: audioBlob.type }))
     form.append('chatId', chatId)
-    const r = await fetch('/api/ai/voice-chat', { method: 'POST', body: form })
+    const base = (import.meta as any).env?.VITE_API_BASE_URL
+    const r = await fetch(base ? `${base}/api/ai/voice-chat` : '/api/ai/voice-chat', { method: 'POST', body: form })
     const j = await r.json()
     const text = j?.result || ''
     setMessages((m) => [...m, { role: 'assistant', content: text }])
@@ -83,7 +85,8 @@ export function Chat() {
     if (!file) return
     const form = new FormData()
     form.append('file', file)
-    await fetch('/api/kb/upload', { method: 'POST', body: form })
+    const base = (import.meta as any).env?.VITE_API_BASE_URL
+    await fetch(base ? `${base}/api/kb/upload` : '/api/kb/upload', { method: 'POST', body: form })
     try { inputEl.value = '' } catch {}
   }
 

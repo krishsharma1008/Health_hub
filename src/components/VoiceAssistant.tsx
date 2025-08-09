@@ -58,7 +58,8 @@ export function VoiceAssistant() {
           const file = new File([blob], `voice.${ext}`, { type: blob.type })
           const form = new FormData()
           form.append('audio', file)
-          const res = await fetch('/api/ai/transcribe', { method: 'POST', body: form })
+      const base = (import.meta as any).env?.VITE_API_BASE_URL
+      const res = await fetch(base ? `${base}/api/ai/transcribe` : '/api/ai/transcribe', { method: 'POST', body: form })
           const json = await res.json()
           if (json?.text) setTranscript(json.text)
         } catch (err) {

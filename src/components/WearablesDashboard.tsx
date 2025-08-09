@@ -65,7 +65,8 @@ const WearablesDashboard: React.FC = () => {
 
   const loadDevices = async () => {
     try {
-      const response = await fetch('/api/wearables/devices')
+      const base = (import.meta as any).env?.VITE_API_BASE_URL
+      const response = await fetch(base ? `${base}/api/wearables/devices` : '/api/wearables/devices')
       if (response.ok) {
         const devicesData = await response.json()
         setDevices(devicesData)
@@ -82,13 +83,24 @@ const WearablesDashboard: React.FC = () => {
   const loadDeviceData = async (deviceId: string) => {
     try {
       const [dataResponse, predictionsResponse] = await Promise.all([
-        fetch(`/api/wearables/data/${deviceId}`),
-        fetch(`/api/wearables/predictions/${deviceId}`, { method: 'POST' })
+        fetch(((import.meta as any).env?.VITE_API_BASE_URL ? `${(import.meta as any).env.VITE_API_BASE_URL}` : '') + `/api/wearables/data/${deviceId}`),
+        fetch(((import.meta as any).env?.VITE_API_BASE_URL ? `${(import.meta as any).env.VITE_API_BASE_URL}` : '') + `/api/wearables/predictions/${deviceId}`, { method: 'POST' })
       ])
 
       if (dataResponse.ok) {
         const data = await dataResponse.json()
-        setRealTimeData(data)
+        // Validate data fields to prevent chart SVG path errors
+        const safe = {
+          ...data,
+          data: {
+            heartRate: Array.isArray(data?.data?.heartRate) ? data.data.heartRate : [],
+            steps: Number.isFinite(data?.data?.steps) ? data.data.steps : 0,
+            calories: Number.isFinite(data?.data?.calories) ? data.data.calories : 0,
+            distance: Number.isFinite(data?.data?.distance) ? data.data.distance : 0,
+            hrv: Array.isArray(data?.data?.hrv) ? data.data.hrv : [],
+          }
+        }
+        setRealTimeData(safe)
       }
 
       if (predictionsResponse.ok) {
@@ -102,7 +114,8 @@ const WearablesDashboard: React.FC = () => {
 
   const connectDevice = async (deviceType: string) => {
     try {
-      const response = await fetch('/api/wearables/connect', {
+      const base = (import.meta as any).env?.VITE_API_BASE_URL
+      const response = await fetch(base ? `${base}/api/wearables/connect` : '/api/wearables/connect', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ deviceType, authToken: 'demo-token' })

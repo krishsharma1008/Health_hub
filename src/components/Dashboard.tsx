@@ -2,6 +2,8 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from './ui/
 import { Button } from './ui/button'
 import { Badge } from './ui/badge'
 import { Progress } from './ui/progress'
+import { QuickActions } from './ui/quick-actions'
+import { GamificationDashboard } from './ui/gamification'
 import { Activity, AlertTriangle, TrendingUp, Calendar, Plus, ArrowRight } from 'lucide-react'
 import { ResponsiveContainer, Radar, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, ScatterChart, Scatter, XAxis, YAxis, ZAxis, Tooltip as ReTooltip, Legend } from 'recharts'
 import { Link } from 'react-router-dom'
@@ -27,7 +29,8 @@ export function Dashboard() {
             upcoming: { checkupDays: 28 },
           },
         })
-        if (!cancelled) setAiSummary((response as any).result || '')
+        const text = (response as any).response?.response || (response as any).result || ''
+        if (!cancelled) setAiSummary(text)
       } catch (err: any) {
         if (!cancelled) setAiError(err?.message || 'Failed to load AI summary')
       } finally {
@@ -42,8 +45,8 @@ export function Dashboard() {
     <div className="p-6 space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900">Health Dashboard</h1>
-          <p className="text-gray-600">Your personalized health insights and next steps</p>
+          <h1 className="text-3xl font-bold">Health Dashboard</h1>
+          <p className="text-muted-foreground">Your personalized health insights and next steps</p>
         </div>
         <Link to="/symptoms">
           <Button>
@@ -52,6 +55,12 @@ export function Dashboard() {
           </Button>
         </Link>
       </div>
+
+      {/* Quick Actions */}
+      <QuickActions />
+
+      {/* Gamification Section */}
+      <GamificationDashboard />
 
       {/* Alert Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">

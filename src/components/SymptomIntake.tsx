@@ -8,6 +8,7 @@ import { Textarea } from './ui/textarea'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from './ui/select'
 import { Badge } from './ui/badge'
 import { Slider } from './ui/slider'
+import { ProgressiveForm, TextFieldStep, SelectionStep } from './ui/progressive-form'
 import { ArrowLeft, Plus, X } from 'lucide-react'
 import { Link } from 'react-router-dom'
 
